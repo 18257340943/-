@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Chrome",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:5001",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "node", //用来启动js
+      "request": "launch",
+      "name": "debugJS", //  修改启动的名字
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      // "program": "${workspaceFolder}\\debug.js"  //默认生成的指向文件的地址
+      "program": "${file}", //表示此时打开的文件
+    }
+  ]
+}

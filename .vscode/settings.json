@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    "*.cjson": "jsonc",
+    "*.wxss": "css",
+    "*.wxs": "javascript",
+    ".babelrc": "javascript",
+    "ostream": "cpp",
+    "iostream": "cpp"
+  },
+  "liveServer.settings.port": 5501
+}
