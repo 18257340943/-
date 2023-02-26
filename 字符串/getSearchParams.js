@@ -12,43 +12,31 @@
 //   job:'frontend',
 //   extraInfo: {a: 'b', c: 'd'}
 // }
-
-function isJSON(str) {
-  if (typeof str == 'string') {
-    try {
-      var obj = JSON.parse(str);
-      if (typeof obj == 'object' && obj) {
-        console.log(3)
-        return true;
-      } else {
-        return false;
-      }
-    } catch {
-      console.error("输入错误");
-    }
-  }
-}
-
+// console.log(JSON.parse(decodeURIComponent("%7B%22a%22%3A%22b%22%2C%22c%22%3A%22d%22%7D")));
 
 function getSearchParams(url) {
   const obj = {}
-  const arr = url.split('?')[1].split('&');
-  arr.forEach(element => {
-    // %7B%22a%22%3A%22b%22%2C%22c%22%3A%22d%22%7D是对象类型将其判断一下；
-    if (isJSON(element.split('=')[1])) {
-      obj[element.split('=')[0]] = JSON.parse(element.split('=')[1]);
-    } else {
-      obj[element.split('=')[0]] = element.split('=')[1];
-    }
+  const paramsStr = url.split('?')[1];    // 将 ? 后面的字符串取出来
+  const paramsArr = paramsStr.split('&'); // 将字符串以 & 分割后存到数组中
 
+  paramsArr.forEach(element => {
+    let [key, val] = element.split('=');
+    // %7B%22a%22%3A%22b%22%2C%22c%22%3A%22d%22%7D 是中文需要解码；
+    if (val[0] == "%") {
+      val = decodeURIComponent(val);
+      if (val[0] == '{') {
+        val = JSON.parse(val);
+      }
+    }
+    obj[key] = val;
   });
-  console.log(obj, 'obj');
+  return obj
 }
 
 
-    // 测试代码请勿修改
-    // console.log(JSON.stringify(
-    //   getSearchParams(
-    //     "https://fliggy.com/demo?name=feizhu&from=home&job=frontend&extraInfo=%7B%22a%22%3A%22b%22%2C%22c%22%3A%22d%22%7D"
-    //   )
-    // ));
+// 测试代码请勿修改
+console.log(JSON.stringify(
+  getSearchParams(
+    "https://fliggy.com/demo?name=feizhu&from=home&job=frontend&extraInfo=%7B%22a%22%3A%22b%22%2C%22c%22%3A%22d%22%7D"
+  )
+));
